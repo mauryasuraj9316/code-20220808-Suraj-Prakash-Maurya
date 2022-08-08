@@ -22,7 +22,7 @@ def bmc_level(bmi_value):
 #FUNCTION TO CALCULATE BMI AND MAP THE BMI CATEGORY
 def calculate_bmi_(record):
     if isinstance(record, list):
-        [x.update({'BMI': (x.get('WeightKg','') / (x.get('HeightCm','ki')/100)**2)}) for x in li_]
+        [x.update({'BMI': (x.get('WeightKg','') / (x.get('HeightCm',0)/100)**2)}) for x in li_]
         [x.update(bmc_level(x.get('BMI'))) for x in li_]
         o_c = len([x for x in li_ if x.get('BMI Category','') == 'Overweight'])
     if isinstance(record, str):
