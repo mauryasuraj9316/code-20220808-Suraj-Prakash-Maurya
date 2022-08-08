@@ -1,0 +1,54 @@
+import json,os,sys
+
+def bmc_level(bmi_value):
+    valid_ = {}
+    bmc = {
+        'Underweight': {'range': [0,18.4], 'health_risk': 'Malnutrition risk'},
+        'Normal weight': {'range': [18.5,24.9], 'health_risk': 'Low risk'},
+        'Overweight': {'range': [25,29.9], 'health_risk': 'Enhanced risk'},
+        'Moderately obese': {'range': [30,34.9], 'health_risk': 'Medium risk'},
+        'Severely obese': {'range': [35,39.9], 'health_risk': 'High risk'},
+        'Very severely obese': {'range': [40,100], 'health_risk': 'Very high risk'},
+        
+    }
+    for i in bmc:
+        k = bmc[i].get('range')
+        if k[0] <= bmi_value <= k[1]:
+            valid_ = {'BMI Category': i, 'BMI Range': k, 'Health risk': bmc[i].get('health_risk')}
+            break
+    return valid_
+    
+def calculate_bmi_(record):
+    if isinstance(record, list):
+        [x.update({'BMI': (x.get('WeightKg','') / (x.get('HeightCm','ki')/100)**2)}) for x in li_]
+        [x.update(bmc_level(x.get('BMI'))) for x in li_]
+        o_c = len([x for x in li_ if x.get('BMI Category','') == 'Overweight'])
+    if isinstance(record, str):
+        return 'List Required for Parsing !!'
+    return {'overweight_count': o_c, 'data': record}
+
+#SAMPLE INPUT
+li_=[{"Gender": "Male", "HeightCm": 171, "WeightKg": 96 },
+{ "Gender": "Male", "HeightCm": 161, "WeightKg": 85 },
+{ "Gender": "Male", "HeightCm": 180, "WeightKg": 77 },
+{ "Gender": "Female", "HeightCm": 166, "WeightKg": 62},
+{"Gender": "Female", "HeightCm": 150, "WeightKg": 70},
+{"Gender": "Female", "HeightCm": 167, "WeightKg": 82}]
+
+data_ = calculate_bmi_(li_)
+print('Count of overweight people', data_.get('overweight_count',0))
+print('Updated data with BMI Calculation ::\n')
+for i in data_.get('data',[]):
+    print(i)
+
+
+#SAMPLE OUTPUT
+Count of overweight people 1
+Updated data with BMI Calculation ::
+
+{'Gender': 'Male', 'HeightCm': 171, 'WeightKg': 96, 'BMI': 32.83061454806607, 'BMI Category': 'Moderately obese', 'BMI Range': [30, 34.9], 'Health risk': 'Medium risk'}
+{'Gender': 'Male', 'HeightCm': 161, 'WeightKg': 85, 'BMI': 32.79194475521777, 'BMI Category': 'Moderately obese', 'BMI Range': [30, 34.9], 'Health risk': 'Medium risk'}
+{'Gender': 'Male', 'HeightCm': 180, 'WeightKg': 77, 'BMI': 23.76543209876543, 'BMI Category': 'Normal weight', 'BMI Range': [18.5, 24.9], 'Health risk': 'Low risk'}
+{'Gender': 'Female', 'HeightCm': 166, 'WeightKg': 62, 'BMI': 22.49963710262738, 'BMI Category': 'Normal weight', 'BMI Range': [18.5, 24.9], 'Health risk': 'Low risk'}
+{'Gender': 'Female', 'HeightCm': 150, 'WeightKg': 70, 'BMI': 31.11111111111111, 'BMI Category': 'Moderately obese', 'BMI Range': [30, 34.9], 'Health risk': 'Medium risk'}
+{'Gender': 'Female', 'HeightCm': 167, 'WeightKg': 82, 'BMI': 29.402273297715947, 'BMI Category': 'Overweight', 'BMI Range': [25, 29.9], 'Health risk': 'Enhanced risk'}
