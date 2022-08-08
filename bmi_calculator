@@ -25,9 +25,10 @@ def calculate_bmi_(record):
         [x.update({'BMI': (x.get('WeightKg','') / (x.get('HeightCm',0)/100)**2)}) for x in li_]
         [x.update(bmc_level(x.get('BMI'))) for x in li_]
         o_c = len([x for x in li_ if x.get('BMI Category','') == 'Overweight'])
+        return {'overweight_count': o_c, 'data': record}
     if isinstance(record, str):
         return 'List Required for Parsing !!'
-    return {'overweight_count': o_c, 'data': record}
+    
 
 #SAMPLE INPUT
 li_=[{"Gender": "Male", "HeightCm": 171, "WeightKg": 96 },
