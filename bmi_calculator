@@ -35,7 +35,10 @@ li_=[{"Gender": "Male", "HeightCm": 171, "WeightKg": 96 },
 {"Gender": "Female", "HeightCm": 150, "WeightKg": 70},
 {"Gender": "Female", "HeightCm": 167, "WeightKg": 82}]
 
+#CALLING THE FUNCTION TO PARSE DATA
 data_ = calculate_bmi_(li_)
+
+#PRINTING OUTPUT
 print('Count of overweight people', data_.get('overweight_count',0))
 print('Updated data with BMI Calculation ::\n')
 for i in data_.get('data',[]):
